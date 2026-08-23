@@ -19,31 +19,38 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <style>
   :root{
     --bg:#FBFBFA;
     --surface:#FFFFFF;
-    --ink:#16161A;
-    --muted:#63636E;
+    --ink:#141418;
+    --muted:#60606B;
     --faint:#9A9AA5;
     --hairline:#E8E8E5;
     --hairline-strong:#D9D9D4;
-    --radius:12px;
-    --shadow-sm:0 1px 2px rgba(16,16,20,.035);
-    --shadow-md:0 4px 10px -4px rgba(16,16,20,.09), 0 12px 26px -12px rgba(16,16,20,.10);
+    --radius:16px;
+    --shadow-sm:0 1px 2px rgba(16,16,20,.04);
+    --shadow-lg:0 2px 4px -2px rgba(16,16,20,.06), 0 18px 36px -14px rgba(16,16,20,.18);
     --sans:"Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
     --headerH:54px;
+    --navH:47px;
+    --ease:cubic-bezier(.22,1,.36,1);
   }
 
   *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--headerH) + 16px)}
+  html{
+    -webkit-text-size-adjust:100%;
+    scroll-behavior:smooth;
+    scroll-padding-top:calc(var(--headerH) + var(--navH) + 18px);
+  }
   body{
     margin:0;background:var(--bg);color:var(--ink);
     font-family:var(--sans);font-size:16px;line-height:1.55;
     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    overflow-x:hidden;
   }
   a{color:inherit}
   img{max-width:100%;display:block}
@@ -53,161 +60,258 @@
     padding:10px 16px;border-radius:0 0 10px 0;font-size:14px;font-weight:600;z-index:99}
   .skip:focus{left:0}
 
-  .wrap{max-width:1400px;margin:0 auto;padding:0 24px}
+  .wrap{max-width:1440px;margin:0 auto;padding:0 26px}
 
   /* ── header ───────────────────────────────────────────────── */
   header{
     border-bottom:1px solid var(--hairline);
     background:rgba(251,251,250,.9);
-    backdrop-filter:saturate(1.4) blur(10px);
-    position:sticky;top:0;z-index:30;
+    backdrop-filter:saturate(1.5) blur(12px);
+    position:sticky;top:0;z-index:40;
   }
   .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--headerH)}
-  .wordmark{font-weight:700;font-size:15.5px;letter-spacing:-.02em;text-decoration:none;
-    display:inline-flex;align-items:center;gap:8px}
-  .wordmark .dot{width:8px;height:8px;border-radius:2.5px;background:var(--ink)}
+  .wordmark{font-weight:800;font-size:15.5px;letter-spacing:-.03em;text-decoration:none;
+    display:inline-flex;align-items:center;gap:9px}
+  .wordmark .dot{
+    width:9px;height:9px;border-radius:3px;background:var(--ink);
+    transition:transform .5s var(--ease);
+  }
+  .wordmark:hover .dot{transform:rotate(135deg) scale(1.15)}
   .navlinks{display:flex;align-items:center;gap:20px}
-  .navlinks a{font-size:13.5px;color:var(--muted);text-decoration:none;font-weight:500;transition:color .15s}
+  .navlinks a{font-size:13.5px;color:var(--muted);text-decoration:none;font-weight:500;
+    position:relative;transition:color .2s}
+  .navlinks a::after{
+    content:"";position:absolute;left:0;right:0;bottom:-3px;height:1.5px;
+    background:var(--ink);transform:scaleX(0);transform-origin:right;
+    transition:transform .3s var(--ease);
+  }
   .navlinks a:hover{color:var(--ink)}
+  .navlinks a:hover::after{transform:scaleX(1);transform-origin:left}
+
+  /* scroll progress */
+  .progress{
+    position:absolute;left:0;bottom:-1px;height:2px;width:100%;
+    background:var(--ink);transform:scaleX(0);transform-origin:left;
+    will-change:transform;
+  }
 
   /* ── hero ─────────────────────────────────────────────────── */
-  .hero{padding:30px 0 22px}
-  h1{margin:0;font-size:clamp(25px,3.1vw,34px);line-height:1.1;letter-spacing:-.035em;font-weight:700}
-  .lede{margin:9px 0 0;font-size:14.5px;color:var(--muted);max-width:70ch}
+  .hero{position:relative;padding:44px 0 26px;overflow:hidden}
+  .blobs{position:absolute;inset:-40% -10% auto -10%;height:420px;z-index:0;pointer-events:none;filter:blur(70px);opacity:.5}
+  .blob{position:absolute;border-radius:50%;mix-blend-mode:multiply}
+  .blob.b1{width:380px;height:380px;background:#DCE7FF;left:2%;top:22%;animation:drift1 22s ease-in-out infinite}
+  .blob.b2{width:320px;height:320px;background:#FFE6DC;left:32%;top:8%;animation:drift2 27s ease-in-out infinite}
+  .blob.b3{width:300px;height:300px;background:#DFF3E8;left:60%;top:26%;animation:drift3 31s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-24px)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-34px,26px)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0)}50%{transform:translate(26px,20px)}}
+
+  .hero .inner{position:relative;z-index:1}
+  .eyebrow{
+    font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--faint);margin:0 0 14px;
+  }
+  h1{margin:0;font-size:clamp(30px,4.6vw,50px);line-height:1.03;letter-spacing:-.04em;font-weight:800;max-width:15ch}
+  .lede{margin:14px 0 0;font-size:15.5px;color:var(--muted);max-width:64ch;line-height:1.6}
   .lede b{color:var(--ink);font-weight:600}
+  .tally{
+    margin-top:16px;font-family:var(--mono);font-size:11.5px;color:var(--faint);
+    display:flex;gap:20px;flex-wrap:wrap;
+  }
+  .tally b{color:var(--ink);font-weight:500}
 
-  /* ── two-column shell ─────────────────────────────────────── */
-  .shell{display:grid;grid-template-columns:186px minmax(0,1fr);gap:38px;padding-bottom:70px}
+  /* hero entrance */
+  .rise{opacity:0;transform:translateY(16px)}
+  .lit .rise{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .lit .rise:nth-child(1){transition-delay:.04s}
+  .lit .rise:nth-child(2){transition-delay:.12s}
+  .lit .rise:nth-child(3){transition-delay:.2s}
+  .lit .rise:nth-child(4){transition-delay:.28s}
 
-  /* left rail */
-  .rail{position:sticky;top:calc(var(--headerH) + 22px);align-self:start}
-  .rail h2{
-    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--faint);margin:0 0 10px;font-weight:500;
+  /* ── sticky category nav (replaces the sidebar) ───────────── */
+  .catnav{
+    position:sticky;top:var(--headerH);z-index:30;
+    background:rgba(251,251,250,.92);backdrop-filter:saturate(1.5) blur(12px);
+    border-bottom:1px solid var(--hairline);
   }
-  .rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px}
-  .rail a{
-    display:flex;align-items:center;gap:9px;
-    padding:6px 9px;border-radius:8px;text-decoration:none;
-    font-size:13px;font-weight:500;color:var(--muted);
-    border-left:2px solid transparent;transition:all .15s;
+  .catnav .row{
+    display:flex;gap:7px;align-items:center;height:var(--navH);
+    overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
   }
-  .rail a:hover{background:#F3F3F1;color:var(--ink)}
-  .rail a.active{color:var(--ink);background:#F1F1EE;border-left-color:var(--ink)}
-  .rail a .n{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--faint)}
-  .rail a.active .n{color:var(--muted)}
-  .rail .railfoot{
-    margin-top:16px;padding-top:14px;border-top:1px solid var(--hairline);
-    font-family:var(--mono);font-size:10.5px;color:var(--faint);line-height:1.7;
+  .catnav .row::-webkit-scrollbar{display:none}
+  .catnav a{
+    display:inline-flex;align-items:center;gap:7px;flex:none;
+    font-size:12.5px;font-weight:550;text-decoration:none;white-space:nowrap;
+    padding:5.5px 13px;border-radius:999px;
+    color:var(--muted);border:1px solid var(--hairline-strong);background:transparent;
+    transition:color .22s,background .22s,border-color .22s,transform .22s var(--ease);
   }
+  .catnav a:hover{color:var(--ink);border-color:var(--ink);transform:translateY(-1px)}
+  .catnav a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .catnav a .n{font-family:var(--mono);font-size:10.5px;opacity:.62}
+  .catnav a svg{width:13px;height:13px}
 
-  /* ── sections ─────────────────────────────────────────────── */
-  .group{padding-top:6px;margin-bottom:34px;scroll-margin-top:calc(var(--headerH) + 16px)}
-  .grouphead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-  .grouphead .gmark{
-    width:22px;height:22px;flex:none;color:var(--ink);opacity:.75;
-    align-self:center;
+  /* ── groups ───────────────────────────────────────────────── */
+  .group{margin:34px 0 0;scroll-margin-top:calc(var(--headerH) + var(--navH) + 18px)}
+  .grouphead{display:flex;align-items:center;gap:11px;margin-bottom:14px;flex-wrap:wrap}
+  .gmark{width:24px;height:24px;flex:none;color:var(--ink);opacity:.8}
+  .gmark svg{width:100%;height:100%}
+  .grouphead h2{margin:0;font-size:19px;font-weight:700;letter-spacing:-.028em}
+  .grouphead .count{
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    border:1px solid var(--hairline-strong);border-radius:999px;padding:1px 8px;
   }
-  .grouphead .gmark svg{width:100%;height:100%}
-  .grouphead h3{margin:0;font-size:16px;font-weight:650;letter-spacing:-.02em}
-  .grouphead .count{font-family:var(--mono);font-size:11px;color:var(--faint)}
-  .grouphead .gdesc{
-    font-size:12.5px;color:var(--muted);margin:0;
-    flex:1 1 100%;
+  .grouphead .rule{
+    flex:1;height:1px;min-width:30px;
+    background:linear-gradient(90deg,var(--hairline-strong),transparent);
+    transform:scaleX(0);transform-origin:left;
+    transition:transform .9s var(--ease) .1s;
   }
+  .group.in .rule{transform:scaleX(1)}
+  .gdesc{margin:0 0 16px;font-size:13.5px;color:var(--muted);max-width:78ch}
 
-  .cards{
-    display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:12px;
-  }
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
 
-  /* ── horizontal list-card ─────────────────────────────────── */
+  /* ── card ─────────────────────────────────────────────────── */
   .card{
-    display:grid;grid-template-columns:104px minmax(0,1fr);gap:0;
+    position:relative;display:flex;flex-direction:column;
     background:var(--surface);border:1px solid var(--hairline);
     border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);
-    transition:transform .18s cubic-bezier(.22,1,.36,1), box-shadow .18s, border-color .18s;
+    opacity:0;transform:translateY(22px);
   }
-  .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--hairline-strong)}
+  .group.in .card{
+    opacity:1;transform:none;
+    transition:
+      opacity .62s var(--ease) calc(var(--i) * 65ms),
+      transform .62s var(--ease) calc(var(--i) * 65ms),
+      box-shadow .32s var(--ease),
+      border-color .32s var(--ease);
+  }
+  .group.in .card:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--shadow-lg);
+    border-color:color-mix(in srgb, var(--dot) 42%, var(--hairline));
+    transition:transform .32s var(--ease), box-shadow .32s var(--ease), border-color .32s var(--ease);
+  }
+  /* accent wash that blooms on hover */
+  .card::after{
+    content:"";position:absolute;inset:0;pointer-events:none;border-radius:var(--radius);
+    background:radial-gradient(90% 60% at 50% 0%, color-mix(in srgb, var(--dot) 13%, transparent) 0%, transparent 70%);
+    opacity:0;transition:opacity .35s var(--ease);
+  }
+  .card:hover::after{opacity:1}
 
   .shot{
-    position:relative;border-right:1px solid var(--hairline);overflow:hidden;
+    position:relative;aspect-ratio:16/10;overflow:hidden;
+    border-bottom:1px solid var(--hairline);
     background:
-      radial-gradient(130% 130% at 20% 0%, color-mix(in srgb, var(--dot) 16%, transparent) 0%, transparent 70%),
+      radial-gradient(120% 130% at 18% 0%, color-mix(in srgb, var(--dot) 17%, transparent) 0%, transparent 68%),
       linear-gradient(160deg,#FAFAF8,#EFEFED);
   }
-  .shot img{width:100%;height:100%;object-fit:cover;object-position:top center;position:relative}
-  /* Portrait/mobile captures letterbox instead of cropping to an unreadable zoom. */
-  .shot.contain img{object-fit:contain;object-position:center;padding:6px}
-  .plate{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--dot);opacity:.45}
-  .plate svg{width:30px;height:30px}
-
-  .body{padding:11px 13px 11px;display:flex;flex-direction:column;min-width:0}
-  .titlerow{display:flex;align-items:center;gap:7px;margin-bottom:4px}
-  .mark{
-    width:21px;height:21px;flex:none;border-radius:6px;
-    display:flex;align-items:center;justify-content:center;color:var(--dot);
-    background:color-mix(in srgb, var(--dot) 12%, #fff);
-    border:1px solid color-mix(in srgb, var(--dot) 24%, transparent);
+  .frames{position:absolute;inset:0}
+  .frames img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;object-position:top center;
+    opacity:0;transition:opacity .85s ease;will-change:opacity,transform;
   }
-  .mark svg{width:13px;height:13px}
-  h4{margin:0;font-size:13.8px;font-weight:650;letter-spacing:-.015em;line-height:1.2;
+  .frames img.on{opacity:1}
+  /* Slow drift on whichever frame is showing; direction alternates so a
+     carousel of four doesn't feel like one repeated move. */
+  .frames img.on.kb-a{animation:kbA 7.5s ease-out both}
+  .frames img.on.kb-b{animation:kbB 7.5s ease-out both}
+  @keyframes kbA{from{transform:scale(1.005) translate3d(0,0,0)}to{transform:scale(1.075) translate3d(-1.2%,-1%,0)}}
+  @keyframes kbB{from{transform:scale(1.075) translate3d(1.2%,-1.4%,0)}to{transform:scale(1.005) translate3d(0,0,0)}}
+  /* Portrait/mobile captures letterbox rather than crop to an unreadable zoom. */
+  .shot.contain .frames img{object-fit:contain;object-position:center;padding:10px}
+
+  .ticks{
+    position:absolute;left:0;right:0;bottom:0;z-index:2;
+    display:flex;gap:3px;padding:9px 11px;justify-content:flex-end;
+    opacity:0;transition:opacity .3s;
+  }
+  .card:hover .ticks,.card:focus-within .ticks{opacity:1}
+  .tick{
+    width:14px;height:3px;border-radius:2px;flex:none;
+    background:rgba(255,255,255,.45);box-shadow:0 0 0 1px rgba(0,0,0,.10);
+    transition:background .3s,width .3s var(--ease);
+  }
+  .tick.on{background:#fff;width:20px}
+  .plate{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:var(--dot);opacity:.42;transition:transform .6s var(--ease),opacity .35s}
+  .plate svg{width:52px;height:52px}
+  .card:hover .plate{transform:scale(1.08) rotate(-4deg);opacity:.55}
+
+  .body{padding:15px 17px 0;flex:1;display:flex;flex-direction:column}
+  .titlerow{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+  .mark{
+    width:28px;height:28px;flex:none;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;color:var(--dot);
+    background:color-mix(in srgb, var(--dot) 11%, #fff);
+    border:1px solid color-mix(in srgb, var(--dot) 24%, transparent);
+    transition:transform .4s var(--ease), background .3s;
+  }
+  .card:hover .mark{transform:rotate(-8deg) scale(1.08);background:color-mix(in srgb, var(--dot) 18%, #fff)}
+  .mark svg{width:16px;height:16px}
+  h3{margin:0;font-size:15.5px;font-weight:700;letter-spacing:-.02em;line-height:1.2;
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .badge{
     margin-left:auto;flex:none;font-family:var(--mono);font-size:9px;letter-spacing:.06em;
     text-transform:uppercase;color:var(--faint);
-    border:1px solid var(--hairline-strong);border-radius:5px;padding:1px 5px;
+    border:1px solid var(--hairline-strong);border-radius:5px;padding:1.5px 5px;
   }
   .blurb{
-    margin:0 0 8px;font-size:12.2px;line-height:1.45;color:var(--muted);flex:1;
-    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    margin:0 0 12px;font-size:13px;line-height:1.55;color:var(--muted);flex:1;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
   }
-  .links{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
-  .lnk{
-    display:inline-flex;align-items:center;gap:4px;
-    font-size:11px;font-weight:550;text-decoration:none;
-    padding:3.5px 8px;border-radius:6px;
-    border:1px solid var(--hairline-strong);color:var(--muted);
-    transition:all .15s;white-space:nowrap;
+  .tags{display:flex;flex-wrap:wrap;gap:5px}
+  .tag{
+    font-family:var(--mono);font-size:9.5px;padding:2.5px 7px;border-radius:5px;
+    color:var(--muted);background:#F5F5F3;border:1px solid var(--hairline);
   }
-  .lnk:hover{color:var(--ink);border-color:var(--ink);background:#FAFAF8}
-  .lnk svg{flex:none}
-  .lnk.primary{background:var(--dot);border-color:var(--dot);color:#fff}
-  .lnk.primary:hover{filter:brightness(.92);background:var(--dot);border-color:var(--dot);color:#fff}
 
-  footer{border-top:1px solid var(--hairline);padding:28px 0 48px}
+  .links{
+    display:flex;flex-wrap:wrap;gap:6px;
+    padding:13px 17px 15px;margin-top:13px;border-top:1px solid var(--hairline);
+    position:relative;z-index:1;
+  }
+  .lnk{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:11.5px;font-weight:600;text-decoration:none;
+    padding:5px 10px;border-radius:8px;
+    border:1px solid var(--hairline-strong);color:var(--muted);
+    transition:color .2s,border-color .2s,background .2s,transform .2s var(--ease);
+    white-space:nowrap;
+  }
+  .lnk:hover{color:var(--ink);border-color:var(--ink);background:#FAFAF8;transform:translateY(-1px)}
+  .lnk svg{flex:none;transition:transform .25s var(--ease)}
+  .lnk:hover svg{transform:translate(1.5px,-1.5px)}
+  .lnk.primary{background:var(--dot);border-color:var(--dot);color:#fff}
+  .lnk.primary:hover{background:var(--dot);border-color:var(--dot);color:#fff;filter:brightness(.92)}
+
+  footer{border-top:1px solid var(--hairline);margin-top:56px;padding:30px 0 52px}
   .foot{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;
     font-size:13px;color:var(--faint)}
   .foot a{color:var(--muted);text-decoration:none;font-weight:500}
   .foot a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
   .foot-links{display:flex;flex-wrap:wrap;gap:18px}
 
-  /* ── responsive ───────────────────────────────────────────── */
-  @media (max-width:1000px){
-    .shell{grid-template-columns:1fr;gap:0}
-    .rail{
-      position:sticky;top:var(--headerH);z-index:19;
-      margin:0 -24px 20px;padding:9px 24px;
-      background:rgba(251,251,250,.94);backdrop-filter:saturate(1.4) blur(10px);
-      border-bottom:1px solid var(--hairline);
-    }
-    .rail h2, .rail .railfoot{display:none}
-    .rail ol{flex-direction:row;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-    .rail ol::-webkit-scrollbar{display:none}
-    .rail a{
-      border-left:none;border:1px solid var(--hairline-strong);border-radius:999px;
-      padding:5px 12px;white-space:nowrap;font-size:12.5px;
-    }
-    .rail a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-    .rail a.active .n{color:rgba(255,255,255,.65)}
-  }
   @media (max-width:560px){
-    .cards{grid-template-columns:1fr}
-    .card{grid-template-columns:88px minmax(0,1fr)}
+    .hero{padding:32px 0 20px}
+    .cards{grid-template-columns:1fr;gap:16px}
   }
+
+  /* Motion is decoration — everything must still work without it. */
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
-    *{animation:none !important;transition:none !important}
-    .card:hover{transform:none}
+    *,*::before,*::after{
+      animation:none !important;
+      transition-duration:.001ms !important;
+      transition-delay:0ms !important;
+    }
+    .rise,.card{opacity:1 !important;transform:none !important}
+    .group .rule{transform:scaleX(1) !important}
+    .card:hover{transform:none !important}
+    .blobs{display:none}
   }
 </style>
 </head>
@@ -222,23 +326,27 @@
       <a href="https://github.com/kbrovibes">GitHub</a>
     </nav>
   </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
 </header>
 
 <main>
-  <section class="wrap hero">
-    <h1>Things I built on weekends.</h1>
-    <p class="lede">I run storage infrastructure teams at Meta for a living. On weekends I build small, complete products with Claude Code — real data, real users, shipped to production. Each one has a <b>live app</b>, a <b>write-up</b>, and its <b>source</b>.</p>
+  <section class="hero" id="hero">
+    <div class="blobs" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+    </div>
+    <div class="wrap inner">
+      <p class="eyebrow rise">kbrovibes · side projects</p>
+      <h1 class="rise">Things I built on weekends.</h1>
+      <p class="lede rise">I run storage infrastructure teams at Meta for a living. On weekends I build small, complete products with Claude Code — real data, real users, shipped to production. Each one has a <b>live app</b>, a <b>write-up</b>, and its <b>source</b>.</p>
+      <div class="tally rise" id="tally"></div>
+    </div>
   </section>
 
-  <div class="wrap shell">
-    <nav class="rail" id="rail" aria-label="Project categories">
-      <h2>Categories</h2>
-      <ol id="raillist"></ol>
-      <p class="railfoot" id="railfoot"></p>
-    </nav>
+  <nav class="catnav" aria-label="Project categories">
+    <div class="wrap row" id="catrow"></div>
+  </nav>
 
-    <div id="projects"></div>
-  </div>
+  <div class="wrap" id="projects"></div>
 </main>
 
 <footer>
@@ -273,7 +381,6 @@ const GLYPH = {
   timer:    S('<circle cx="10.6" cy="13.4" r="7.8"/><path d="M10.6 8.8v4.6l3 1.9"/><path d="m19.4 2.4.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9.9-2.3Z"/>'),
   parcel:   S('<path d="M3.2 7.4 12 3l8.8 4.4v9.2L12 21l-8.8-4.4V7.4Z"/><path d="m3.2 7.4 8.8 4.4 8.8-4.4"/><path d="M12 11.8V21"/>'),
 
-  /* category marks */
   catMoney: S('<path d="M3 18.4 8.6 12l4 3.6L21 5.6"/><path d="M21 10.4v-4.8h-4.8"/><path d="M3 21h18"/>'),
   catSport: S('<circle cx="12" cy="12" r="9"/><path d="M12 3c3.4 2.6 3.4 15.4 0 18"/><path d="M12 3c-3.4 2.6-3.4 15.4 0 18"/><path d="M3.4 9.2c5.4 1.9 11.8 1.9 17.2 0"/>'),
   catPlay:  S('<rect x="2.6" y="6.4" width="18.8" height="11.2" rx="4.4"/><path d="M7.4 10.6v3.2"/><path d="M5.8 12.2H9"/><circle cx="16" cy="11.6" r="1"/><circle cx="18.2" cy="13.8" r="1"/>'),
@@ -282,136 +389,165 @@ const GLYPH = {
 };
 
 const ICON = {
-  app:  '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>',
-  page: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H19v18H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M8 7h7M8 11h7"/></svg>',
-  repo: '<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.627-5.373-12-12-12z"/></svg>'
+  app:  '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>',
+  page: '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H19v18H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M8 7h7M8 11h7"/></svg>',
+  repo: '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.627-5.373-12-12-12z"/></svg>'
 };
 
 /* Each project belongs to exactly one group, so nothing appears twice. */
 const GROUPS = [
-  { id:"money", label:"Money",     glyph:"catMoney", desc:"Where the money goes, and what the market is quietly assuming." },
-  { id:"sports", label:"Sports",   glyph:"catSport", desc:"Two badminton apps, because one club was apparently not enough." },
-  { id:"play",  label:"Play",      glyph:"catPlay",  desc:"Games and stories, mostly built for my kids and their friends." },
-  { id:"ai",    label:"AI helpers", glyph:"catAI",   desc:"Tedious human chores handed to a model that does not mind them." },
-  { id:"tools", label:"Dev tools", glyph:"catTools", desc:"The things I build so the other things are easier to build." }
+  { id:"money",  label:"Money",      glyph:"catMoney", desc:"Where the money actually goes, and what the market is quietly assuming." },
+  { id:"sports", label:"Sports",     glyph:"catSport", desc:"Two badminton apps, because one club was apparently not enough." },
+  { id:"play",   label:"Play",       glyph:"catPlay",  desc:"Games and stories, mostly built for my kids and their friends." },
+  { id:"ai",     label:"AI helpers", glyph:"catAI",    desc:"Tedious human chores handed to a model that does not mind them." },
+  { id:"tools",  label:"Dev tools",  glyph:"catTools", desc:"The things I build so the other things are easier to build." }
 ];
 
 const PROJECTS = [
-  { group:"ai", id:"stylecheck", title:"Hanger Management", glyph:"hanger",
-    blurb:"An AI personal stylist. Catalogues every piece you own and shows you wearing the outfit before you get dressed.",
-    app:"https://hangermanagement.vercel.app", page:"https://kbrovibes.github.io/stylecheck/",
-    repo:"https://github.com/kbrovibes/stylecheck", accent:"#7D6138", thumb:"media/stylecheck.jpg" },
-
   { group:"money", id:"stonkbro", title:"Stonk Bro", glyph:"candles",
-    blurb:"An options-trading copilot for premium sellers. Live chains, a PMCC scanner, AI research, roll and close signals. Not financial advice.",
+    blurb:"An options-trading copilot for premium sellers. Live option chains, a PMCC scanner, AI-written research, and roll/close signals. Not financial advice.",
     app:"https://stonkbro.vercel.app", page:"https://kbrovibes.github.io/stonkbro/",
-    repo:"https://github.com/kbrovibes/stonkbro", accent:"#15803D", thumb:"media/stonkbro.jpg" },
+    repo:"https://github.com/kbrovibes/stonkbro",
+    tags:["Next.js","Claude AI","Supabase"], accent:"#15803D", frames:4 },
 
   { group:"money", id:"marketmath", title:"Market Math", glyph:"ledger",
-    blurb:"Twenty years of as-filed 10-K data per S&P 500 company, reverse DCF, and quality scores that print their own rules.",
+    blurb:"Twenty years of as-filed 10-K data per S&P 500 company, reverse DCF, and quality scores that print their own rules. Every number traces to a filing.",
     app:"https://marketmath-theta.vercel.app", page:"https://kbrovibes.github.io/marketmath/",
-    repo:"https://github.com/kbrovibes/marketmath", accent:"#2563EB", thumb:"media/marketmath.jpg" },
+    repo:"https://github.com/kbrovibes/marketmath",
+    tags:["Next.js","SEC EDGAR","Supabase"], accent:"#2563EB", frames:5 },
 
   { group:"money", id:"wisesplit", title:"Wise Split", glyph:"receipts",
-    blurb:"Splitwise without the paywall. Debt-graph settle-up, natural-language quick add, offline PWA. Zero tracking, free forever.",
+    blurb:"Splitwise without the paywall. Debt-graph settle-up that beats pairwise, natural-language quick add, multi-currency, offline PWA. Zero tracking, free forever.",
     app:"https://kbrovibes.github.io/wisesplit/", page:"https://kbrovibes.github.io/wisesplit/landing/",
-    repo:"https://github.com/kbrovibes/wisesplit", accent:"#0F766E", thumb:"media/wisesplit.jpg" },
+    repo:"https://github.com/kbrovibes/wisesplit",
+    tags:["Next.js","Supabase","PWA"], accent:"#0F766E", frames:4 },
 
   { group:"money", id:"brokebro", title:"Broke Bro", glyph:"wallet",
-    blurb:"Personal expense tracking with an Amazon order importer — orders, returns, tolerance matching, refund credits reconciled automatically.",
+    blurb:"Personal expense tracking with an Amazon order importer — orders, returns, tolerance matching, and refund credits reconciled automatically.",
     app:"https://brokebro.vercel.app", page:null,
-    repo:"https://github.com/kbrovibes/brokebro", accent:"#BE123C", thumb:"media/brokebro.jpg", private:true },
+    repo:"https://github.com/kbrovibes/brokebro",
+    tags:["Next.js","TypeScript"], accent:"#BE123C", frames:0, private:true },
 
   { group:"money", id:"daymn-amazon", title:"Daymn Amazon", glyph:"parcel",
-    blurb:"An honest look at where the money actually went. Turns Amazon order history into a local dashboard, on a five-tier impulse scale.",
+    blurb:"An honest look at where the money went. Turns your Amazon order history into a self-contained local dashboard, ranked on a five-tier impulse scale.",
     app:null, page:null,
-    repo:"https://github.com/kbrovibes/daymn-amazon", accent:"#0F766E", thumb:"media/daymn-amazon.jpg", private:true },
+    repo:"https://github.com/kbrovibes/daymn-amazon",
+    tags:["Node","Local-only"], accent:"#0F766E", frames:0, private:true },
 
   { group:"sports", id:"opencourt", title:"Open Court", glyph:"trophy",
-    blurb:"Club badminton tournaments that don't feel like spreadsheets. Share a link, tap players into teams, run the bracket from courtside.",
+    blurb:"Club badminton tournaments that don't feel like spreadsheets. Drop a link in the group chat, tap players into teams, and run the whole bracket from courtside.",
     app:"https://opencourt-badminton.vercel.app", page:"https://kbrovibes.github.io/opencourt/",
-    repo:"https://github.com/kbrovibes/opencourt", accent:"#0369A1", thumb:"media/opencourt.jpg", fit:"contain" },
+    repo:"https://github.com/kbrovibes/opencourt",
+    tags:["Next.js","Supabase","PWA"], accent:"#0369A1", frames:5, fit:"contain" },
 
   { group:"sports", id:"snobaddy", title:"Sno Baddy", glyph:"shuttle",
-    blurb:"A digital whiteboard for a drop-in badminton club in Snoqualmie. Sessions, check-ins, match generation, season leaderboards.",
+    blurb:"A digital whiteboard for a drop-in badminton club in Snoqualmie. Sessions, check-ins, match generation, season leaderboards. Wildly over-engineered, on purpose.",
     app:"https://snobaddy.vercel.app", page:"https://kbrovibes.github.io/snobaddy/",
-    repo:"https://github.com/kbrovibes/snobaddy", accent:"#BE185D", thumb:"media/snobaddy.jpg", fit:"contain" },
+    repo:"https://github.com/kbrovibes/snobaddy",
+    tags:["Next.js","Supabase","Realtime"], accent:"#BE185D", frames:6, fit:"contain" },
 
   { group:"play", id:"doodle-disaster", title:"Doodle Disaster", glyph:"doodle",
-    blurb:"A multiplayer draw-and-guess party game. Short room codes, a live shared canvas, and bots to fill the room when your friends flake.",
+    blurb:"A multiplayer draw-and-guess party game. A live shared canvas, word masks and hints, and AI bots that actually draw so the room is never empty.",
     app:"https://doodle-disaster.vercel.app", page:"https://kbrovibes.github.io/doodle-disaster/",
-    repo:"https://github.com/kbrovibes/doodle-disaster", accent:"#B45309", thumb:"media/doodle-disaster.jpg" },
+    repo:"https://github.com/kbrovibes/doodle-disaster",
+    tags:["Next.js","Canvas","PWA"], accent:"#B45309", frames:5 },
 
   { group:"play", id:"superhero-stories", title:"Superhero Stories", glyph:"mask",
     blurb:"Hundreds of original superhero stories as a static web app. Written for a seven-year-old audience — no death, no tragedy, villains merely mischievous.",
     app:"https://superhero-stories.vercel.app", page:"https://kbrovibes.github.io/superhero-stories/",
-    repo:"https://github.com/kbrovibes/superhero-stories", accent:"#4F46E5", thumb:"media/superhero-stories.jpg" },
+    repo:"https://github.com/kbrovibes/superhero-stories",
+    tags:["Next.js","Static Export","Claude AI"], accent:"#4F46E5", frames:4 },
+
+  { group:"ai", id:"stylecheck", title:"Hanger Management", glyph:"hanger",
+    blurb:"An AI personal stylist. Catalogues every piece of clothing you own, builds a photoreal render of you, and shows you wearing the outfit before you get dressed.",
+    app:"https://hangermanagement.vercel.app", page:"https://kbrovibes.github.io/stylecheck/",
+    repo:"https://github.com/kbrovibes/stylecheck",
+    tags:["Next.js 16","Supabase","Gemini"], accent:"#7D6138", frames:4 },
 
   { group:"ai", id:"taxbro", title:"Tax Bro", glyph:"taxdoc",
-    blurb:"A Claude Code assistant for US federal returns. Point it at a folder of W-2s and 1099s; it reads everything in one pass. Not tax advice.",
+    blurb:"A Claude Code assistant for US federal returns. Point it at a folder of W-2s, 1099s and receipts; it reads everything in one pass. Not tax advice.",
     app:null, page:"https://kbrovibes.github.io/taxbro/",
-    repo:"https://github.com/kbrovibes/taxbro", accent:"#B45309", thumb:"media/taxbro.jpg" },
+    repo:"https://github.com/kbrovibes/taxbro",
+    tags:["Claude Code","TypeScript"], accent:"#B45309", frames:4 },
 
   { group:"tools", id:"bro-toolkit", title:"Bro Toolkit", glyph:"toolbox",
-    blurb:"A portable Mac toolkit — Claude skills, zsh and tmux configs, a kbro CLI. One command to set it up, one command to remove every trace.",
+    blurb:"A portable Mac toolkit — Claude skills, zsh and tmux configs, a kbro CLI. One command to make a fresh machine feel like home, one command to remove every trace.",
     app:null, page:"https://kbrovibes.github.io/bro-toolkit/",
-    repo:"https://github.com/kbrovibes/bro-toolkit", accent:"#7C3AED", thumb:"media/bro-toolkit.jpg" },
+    repo:"https://github.com/kbrovibes/bro-toolkit",
+    tags:["Shell","Zsh","Tmux"], accent:"#7C3AED", frames:4 },
 
   { group:"tools", id:"portfolio", title:"Portfolio", glyph:"themes",
-    blurb:"This site's sibling. One résumé dataset rendered through completely different themes — a dark portfolio, a monospace CLI, a goofy sticker mode.",
+    blurb:"My personal site. One résumé dataset rendered through completely different visual themes — a polished dark portfolio, a monospace CLI, and a goofy sticker mode.",
     app:"https://karthikrajan.info", page:"https://kbrovibes.github.io/portfolio/",
-    repo:"https://github.com/kbrovibes/portfolio", accent:"#7C3AED", thumb:"media/portfolio.jpg" },
+    repo:"https://github.com/kbrovibes/portfolio",
+    tags:["Next.js","Framer Motion","Tailwind"], accent:"#7C3AED", frames:3 },
 
   { group:"tools", id:"deadcode", title:"Dead Code", glyph:"braces",
-    blurb:"A personal interview-prep Q&A bank. Drop in raw PDFs or notes and get a structured answer with a TLDR to skim and a full mode to study.",
+    blurb:"A personal interview-prep Q&A bank. Drop in raw PDFs or notes and the pipeline produces a structured answer with a TLDR to skim and a full mode to study.",
     app:"https://deadcode2.vercel.app", page:null,
-    repo:"https://github.com/kbrovibes/deadcode", accent:"#475569", thumb:"media/deadcode.jpg", private:true },
+    repo:"https://github.com/kbrovibes/deadcode",
+    tags:["Next.js","Supabase"], accent:"#475569", frames:0, private:true },
 
   { group:"tools", id:"claude-token-bot", title:"Claude Token Bot", glyph:"timer",
-    blurb:"Keeps Claude Code's five-hour rolling token window warm by firing scheduled pings on a configurable cadence, so a window is always active.",
+    blurb:"Keeps Claude Code's five-hour rolling token window warm by firing scheduled pings on a configurable cadence, so a window is always active when you need one.",
     app:"https://claude-token-bot.vercel.app", page:null,
-    repo:"https://github.com/kbrovibes/claude-token-bot", accent:"#C2410C", thumb:"media/claude-token-bot.jpg", private:true }
+    repo:"https://github.com/kbrovibes/claude-token-bot",
+    tags:["Python","Cron","macOS"], accent:"#C2410C", frames:0, private:true }
 ];
 
 const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-function card(p){
+function card(p, i){
   const el = document.createElement('article');
   el.className = 'card';
   el.style.setProperty('--dot', p.accent);
+  el.style.setProperty('--i', i);
 
   const g = GLYPH[p.glyph] || GLYPH.braces;
 
+  const n = p.frames || 0;
+  const imgs = Array.from({length:n}, (_, k) =>
+    `<img src="media/${esc(p.id)}/${String(k+1).padStart(2,'0')}.jpg" alt="${k === 0 ? 'Screenshot of ' + esc(p.title) : ''}" ${k === 0 ? '' : 'aria-hidden="true" '}loading="lazy" decoding="async" />`
+  ).join('');
+  const ticks = Array.from({length:n}, () => '<span class="tick"></span>').join('');
+
   const links = [];
-  if (p.app)  links.push(`<a class="lnk primary" href="${esc(p.app)}" target="_blank" rel="noopener noreferrer">${ICON.app}<span>App</span></a>`);
-  if (p.page) links.push(`<a class="lnk" href="${esc(p.page)}" target="_blank" rel="noopener noreferrer">${ICON.page}<span>Page</span></a>`);
+  if (p.app)  links.push(`<a class="lnk primary" href="${esc(p.app)}" target="_blank" rel="noopener noreferrer">${ICON.app}<span>Open app</span></a>`);
+  if (p.page) links.push(`<a class="lnk" href="${esc(p.page)}" target="_blank" rel="noopener noreferrer">${ICON.page}<span>Project page</span></a>`);
   links.push(`<a class="lnk" href="${esc(p.repo)}" target="_blank" rel="noopener noreferrer">${ICON.repo}<span>Source</span></a>`);
 
   el.innerHTML = `
     <div class="shot${p.fit === 'contain' ? ' contain' : ''}">
       <div class="plate" aria-hidden="true">${g}</div>
-      <img src="${esc(p.thumb)}" alt="Screenshot of ${esc(p.title)}" loading="lazy" decoding="async" />
+      <div class="frames">${imgs}</div>
+      ${p.frames > 1 ? `<div class="ticks" aria-hidden="true">${ticks}</div>` : ''}
     </div>
     <div class="body">
       <div class="titlerow">
         <span class="mark" aria-hidden="true">${g}</span>
-        <h4>${esc(p.title)}</h4>
+        <h3>${esc(p.title)}</h3>
         ${p.private ? '<span class="badge" title="Source repository is private">Private</span>' : ''}
       </div>
       <p class="blurb">${esc(p.blurb)}</p>
-      <div class="links">${links.join('')}</div>
+      <div class="tags">${p.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
     </div>
+    <div class="links">${links.join('')}</div>
   `;
 
-  // Screenshots are optional — a missing one leaves the glyph plate showing.
-  const img = el.querySelector('.shot img');
-  img.addEventListener('error', () => img.remove(), { once:true });
+  // Screenshots are optional — missing ones leave the glyph plate showing.
+  el.querySelectorAll('.frames img').forEach((img, k) => {
+    img.addEventListener('error', () => {
+      img.remove();
+      const t = el.querySelectorAll('.tick')[k];
+      if (t) t.remove();
+    }, { once:true });
+  });
 
   return el;
 }
 
 const host = document.getElementById('projects');
-const raillist = document.getElementById('raillist');
+const catrow = document.getElementById('catrow');
 
 GROUPS.forEach(gr => {
   const items = PROJECTS.filter(p => p.group === gr.id);
@@ -424,40 +560,136 @@ GROUPS.forEach(gr => {
   sec.innerHTML = `
     <div class="grouphead">
       <span class="gmark" aria-hidden="true">${GLYPH[gr.glyph]}</span>
-      <h3 id="h-${gr.id}">${esc(gr.label)}</h3>
+      <h2 id="h-${gr.id}">${esc(gr.label)}</h2>
       <span class="count">${items.length}</span>
-      <p class="gdesc">${esc(gr.desc)}</p>
+      <span class="rule" aria-hidden="true"></span>
     </div>
+    <p class="gdesc">${esc(gr.desc)}</p>
     <div class="cards"></div>
   `;
   const cards = sec.querySelector('.cards');
-  items.forEach(p => cards.appendChild(card(p)));
+  items.forEach((p, i) => cards.appendChild(card(p, i)));
   host.appendChild(sec);
 
-  const li = document.createElement('li');
-  li.innerHTML = `<a href="#${gr.id}" data-target="${gr.id}">${esc(gr.label)}<span class="n">${items.length}</span></a>`;
-  raillist.appendChild(li);
+  const a = document.createElement('a');
+  a.href = `#${gr.id}`;
+  a.dataset.target = gr.id;
+  a.innerHTML = `${GLYPH[gr.glyph]}${esc(gr.label)}<span class="n">${items.length}</span>`;
+  catrow.appendChild(a);
 });
 
 const liveApps = PROJECTS.filter(p => p.app).length;
-document.getElementById('railfoot').textContent =
-  `${PROJECTS.length} projects\n${liveApps} live apps`;
+const withPages = PROJECTS.filter(p => p.page).length;
+document.getElementById('tally').innerHTML =
+  `<span><b>${PROJECTS.length}</b> projects</span><span><b>${liveApps}</b> live apps</span><span><b>${withPages}</b> write-ups</span>`;
 
-/* Scroll-spy: highlight the group currently nearest the top of the viewport. */
-const railLinks = [...raillist.querySelectorAll('a')];
-const sections = GROUPS.map(g => document.getElementById(g.id)).filter(Boolean);
+/* hero entrance */
+requestAnimationFrame(() => document.getElementById('hero').classList.add('lit'));
 
+/* reveal each group as it scrolls in */
+const groups = [...document.querySelectorAll('.group')];
+if ('IntersectionObserver' in window) {
+  const reveal = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); reveal.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.06 });
+  groups.forEach(g => reveal.observe(g));
+} else {
+  groups.forEach(g => g.classList.add('in'));
+}
+
+/* ── thumbnail carousels ──────────────────────────────────────────────────
+   Each card crossfades through its frames with a slow Ken Burns drift.
+   Only cards on screen run a timer; hovering one holds the current frame so
+   you can actually look at it. Start offsets are staggered so a grid of
+   cards doesn't flip in lockstep. */
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+function initCarousel(cardEl, seed){
+  const imgs = [...cardEl.querySelectorAll('.frames img')];
+  const ticks = [...cardEl.querySelectorAll('.tick')];
+  if (!imgs.length) return null;
+
+  let i = 0, timer = null, hovered = false, visible = false;
+
+  function show(n){
+    imgs.forEach((im, k) => {
+      const on = k === n;
+      im.classList.toggle('on', on);
+      im.classList.remove('kb-a', 'kb-b');
+      if (on) {
+        // restart the drift animation on every entry
+        void im.offsetWidth;
+        im.classList.add(n % 2 ? 'kb-b' : 'kb-a');
+      }
+    });
+    ticks.forEach((t, k) => t.classList.toggle('on', k === n));
+    i = n;
+  }
+
+  function tick(){ show((i + 1) % imgs.length); }
+
+  function run(){
+    stop();
+    if (imgs.length < 2 || !visible || hovered || reduceMotion.matches) return;
+    timer = setInterval(tick, 3800);
+  }
+  function stop(){ if (timer) { clearInterval(timer); timer = null; } }
+
+  cardEl.addEventListener('mouseenter', () => { hovered = true; run(); });
+  cardEl.addEventListener('mouseleave', () => { hovered = false; run(); });
+  cardEl.addEventListener('focusin',   () => { hovered = true; run(); });
+  cardEl.addEventListener('focusout',  () => { hovered = false; run(); });
+
+  show(0);
+  // Stagger the first advance so neighbouring cards drift out of phase.
+  const offset = (seed % 5) * 620;
+  return {
+    setVisible(v){
+      if (v === visible) return;
+      visible = v;
+      if (v) setTimeout(run, offset); else stop();
+    }
+  };
+}
+
+const carousels = [];
+document.querySelectorAll('.card').forEach((c, k) => {
+  const api = initCarousel(c, k);
+  if (api) carousels.push([c, api]);
+});
+
+if ('IntersectionObserver' in window) {
+  const map = new Map(carousels);
+  const vis = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      const api = map.get(e.target);
+      if (api) api.setVisible(e.isIntersecting);
+    });
+  }, { rootMargin: '120px 0px' });
+  carousels.forEach(([c]) => vis.observe(c));
+} else {
+  carousels.forEach(([, api]) => api.setVisible(true));
+}
+
+// Stop everything while the tab is hidden.
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) carousels.forEach(([, api]) => api.setVisible(false));
+});
+
+/* category nav scroll-spy */
+const catLinks = [...catrow.querySelectorAll('a')];
 function setActive(id){
-  railLinks.forEach(a => {
+  catLinks.forEach(a => {
     const on = a.dataset.target === id;
     a.classList.toggle('active', on);
     if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
   });
 }
-
 if ('IntersectionObserver' in window) {
   const seen = new Map();
-  const io = new IntersectionObserver((entries) => {
+  const spy = new IntersectionObserver((entries) => {
     entries.forEach(e => seen.set(e.target.id, e));
     let best = null;
     for (const e of seen.values()) {
@@ -465,10 +697,25 @@ if ('IntersectionObserver' in window) {
       if (!best || e.boundingClientRect.top < best.boundingClientRect.top) best = e;
     }
     if (best) setActive(best.target.id);
-  }, { rootMargin: '-25% 0px -60% 0px', threshold: 0 });
-  sections.forEach(s => io.observe(s));
+  }, { rootMargin: '-22% 0px -62% 0px', threshold: 0 });
+  groups.forEach(g => spy.observe(g));
 }
 setActive(GROUPS[0].id);
+
+/* scroll progress bar */
+const bar = document.getElementById('progress');
+let ticking = false;
+function drawProgress(){
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.transform = `scaleX(${h > 0 ? Math.min(window.scrollY / h, 1) : 0})`;
+  ticking = false;
+}
+addEventListener('scroll', () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(drawProgress);
+}, { passive:true });
+drawProgress();
 </script>
 </body>
 </html>
