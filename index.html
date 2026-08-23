@@ -426,7 +426,7 @@ const PROJECTS = [
     blurb:"Personal expense tracking with an Amazon order importer — orders, returns, tolerance matching, and refund credits reconciled automatically.",
     app:"https://brokebro.vercel.app", page:null,
     repo:"https://github.com/kbrovibes/brokebro",
-    tags:["Next.js","TypeScript"], accent:"#BE123C", frames:0, private:true },
+    tags:["Next.js","TypeScript"], accent:"#BE123C", frames:1, private:true },
 
   { group:"money", id:"daymn-amazon", title:"Daymn Amazon", glyph:"parcel",
     blurb:"An honest look at where the money went. Turns your Amazon order history into a self-contained local dashboard, ranked on a five-tier impulse scale.",
@@ -486,13 +486,13 @@ const PROJECTS = [
     blurb:"A personal interview-prep Q&A bank. Drop in raw PDFs or notes and the pipeline produces a structured answer with a TLDR to skim and a full mode to study.",
     app:"https://deadcode2.vercel.app", page:null,
     repo:"https://github.com/kbrovibes/deadcode",
-    tags:["Next.js","Supabase"], accent:"#475569", frames:0, private:true },
+    tags:["Next.js","Supabase"], accent:"#475569", frames:3, private:true },
 
   { group:"tools", id:"claude-token-bot", title:"Claude Token Bot", glyph:"timer",
     blurb:"Keeps Claude Code's five-hour rolling token window warm by firing scheduled pings on a configurable cadence, so a window is always active when you need one.",
     app:"https://claude-token-bot.vercel.app", page:null,
     repo:"https://github.com/kbrovibes/claude-token-bot",
-    tags:["Python","Cron","macOS"], accent:"#C2410C", frames:0, private:true }
+    tags:["Python","Cron","macOS"], accent:"#C2410C", frames:2, private:true }
 ];
 
 const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
