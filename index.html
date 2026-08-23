@@ -4,14 +4,14 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>kbrovibes — things I built on weekends</title>
-<meta name="description" content="Side projects by Karthik Rajan. Every one of them has a live app, a write-up, and open source behind it." />
+<meta name="description" content="Side projects by Karthik Rajan. Each one has a live app, a write-up, and open source behind it." />
 <meta name="color-scheme" content="light" />
 <link rel="canonical" href="https://kbrovibes.github.io/" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="kbrovibes" />
 <meta property="og:title" content="kbrovibes — things I built on weekends" />
-<meta property="og:description" content="Side projects by Karthik Rajan. Every one of them has a live app, a write-up, and open source behind it." />
+<meta property="og:description" content="Side projects by Karthik Rajan. Each one has a live app, a write-up, and open source behind it." />
 <meta property="og:url" content="https://kbrovibes.github.io/" />
 <meta name="twitter:card" content="summary_large_image" />
 
@@ -26,14 +26,13 @@
     --bg:#FBFBFA;
     --surface:#FFFFFF;
     --ink:#16161A;
-    --muted:#6B6B76;
+    --muted:#63636E;
     --faint:#9A9AA5;
     --hairline:#E7E7E4;
-    --hairline-strong:#D8D8D3;
-    --accent:#1A1A18;
-    --radius:16px;
-    --shadow-sm:0 1px 2px rgba(16,16,20,.04), 0 1px 3px rgba(16,16,20,.03);
-    --shadow-md:0 4px 6px -2px rgba(16,16,20,.05), 0 12px 24px -6px rgba(16,16,20,.08);
+    --hairline-strong:#D9D9D4;
+    --radius:14px;
+    --shadow-sm:0 1px 2px rgba(16,16,20,.04);
+    --shadow-md:0 4px 8px -3px rgba(16,16,20,.07), 0 14px 28px -10px rgba(16,16,20,.10);
     --sans:"Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   }
@@ -41,218 +40,149 @@
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:var(--sans);
-    font-size:16px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   }
   a{color:inherit}
   img{max-width:100%;display:block}
+  :focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
 
-  :focus-visible{
-    outline:2px solid var(--ink);
-    outline-offset:3px;
-    border-radius:6px;
-  }
-
-  .skip{
-    position:absolute;left:-9999px;top:0;
-    background:var(--ink);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;
-    font-size:14px;font-weight:600;z-index:99;
-  }
+  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;
+    padding:10px 16px;border-radius:0 0 10px 0;font-size:14px;font-weight:600;z-index:99}
   .skip:focus{left:0}
 
-  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 22px}
 
   /* ── header ───────────────────────────────────────────────── */
   header{
     border-bottom:1px solid var(--hairline);
-    background:rgba(251,251,250,.86);
+    background:rgba(251,251,250,.88);
     backdrop-filter:saturate(1.4) blur(10px);
     position:sticky;top:0;z-index:20;
   }
-  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
-  .wordmark{
-    font-weight:700;font-size:16px;letter-spacing:-.02em;text-decoration:none;
-    display:inline-flex;align-items:center;gap:9px;
-  }
-  .wordmark .dot{
-    width:9px;height:9px;border-radius:3px;background:var(--ink);display:inline-block;
-  }
-  .navlinks{display:flex;align-items:center;gap:22px}
-  .navlinks a{
-    font-size:14px;color:var(--muted);text-decoration:none;font-weight:500;
-    transition:color .15s ease;
-  }
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:54px}
+  .wordmark{font-weight:700;font-size:15.5px;letter-spacing:-.02em;text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px}
+  .wordmark .dot{width:8px;height:8px;border-radius:2.5px;background:var(--ink)}
+  .navlinks{display:flex;align-items:center;gap:20px}
+  .navlinks a{font-size:13.5px;color:var(--muted);text-decoration:none;font-weight:500;transition:color .15s}
   .navlinks a:hover{color:var(--ink)}
 
-  /* ── hero ─────────────────────────────────────────────────── */
-  .hero{padding:76px 0 44px}
-  .eyebrow{
-    font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--faint);margin:0 0 20px;
-  }
+  /* ── hero (deliberately compact) ──────────────────────────── */
+  .hero{padding:34px 0 0}
   h1{
-    margin:0;
-    font-size:clamp(34px,5.4vw,58px);
-    line-height:1.05;
-    letter-spacing:-.035em;
-    font-weight:700;
-    max-width:16ch;
+    margin:0;font-size:clamp(26px,3.4vw,38px);line-height:1.08;
+    letter-spacing:-.035em;font-weight:700;
   }
-  .lede{
-    margin:22px 0 0;
-    font-size:clamp(16px,1.5vw,18.5px);
-    color:var(--muted);
-    max-width:60ch;
-    line-height:1.6;
-  }
-  .lede strong{color:var(--ink);font-weight:600}
+  .lede{margin:10px 0 0;font-size:15px;color:var(--muted);max-width:66ch}
 
-  .meta{
-    display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:30px;
-    font-family:var(--mono);font-size:12.5px;color:var(--faint);
-  }
-  .meta b{color:var(--ink);font-weight:500}
-
-  /* ── filters ──────────────────────────────────────────────── */
-  .filters{
-    display:flex;flex-wrap:wrap;gap:8px;
-    padding:34px 0 4px;
-    border-top:1px solid var(--hairline);
-    margin-top:52px;
+  .toolbar{
+    display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+    margin-top:20px;padding-top:16px;border-top:1px solid var(--hairline);
   }
   .chip{
-    font:inherit;font-size:13px;font-weight:500;
-    padding:6px 14px;border-radius:999px;cursor:pointer;
+    font:inherit;font-size:12.5px;font-weight:500;
+    padding:5px 12px;border-radius:999px;cursor:pointer;
     background:transparent;color:var(--muted);
-    border:1px solid var(--hairline-strong);
-    transition:all .15s ease;
+    border:1px solid var(--hairline-strong);transition:all .15s;
   }
   .chip:hover{color:var(--ink);border-color:var(--ink)}
   .chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .tally{
+    margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);
+    white-space:nowrap;
+  }
 
   /* ── grid ─────────────────────────────────────────────────── */
   .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
-    gap:22px;
-    padding:26px 0 90px;
-    align-items:stretch;
+    grid-template-columns:repeat(auto-fill,minmax(258px,1fr));
+    gap:16px;padding:18px 0 70px;align-items:stretch;
   }
 
   .card{
     display:flex;flex-direction:column;
     background:var(--surface);
     border:1px solid var(--hairline);
-    border-radius:var(--radius);
-    overflow:hidden;
+    border-radius:var(--radius);overflow:hidden;
     box-shadow:var(--shadow-sm);
-    transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease, border-color .22s ease;
+    transition:transform .2s cubic-bezier(.22,1,.36,1), box-shadow .2s, border-color .2s;
   }
-  .card:hover{
-    transform:translateY(-3px);
-    box-shadow:var(--shadow-md);
-    border-color:var(--hairline-strong);
-  }
+  .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--hairline-strong)}
   .card.is-hidden{display:none}
 
   .shot{
-    position:relative;
-    aspect-ratio:16/10;
-    background:var(--tint, #F2F2F0);
-    border-bottom:1px solid var(--hairline);
-    overflow:hidden;
-  }
-  .shot img{
-    width:100%;height:100%;object-fit:cover;object-position:top center;
-    position:relative;
-  }
-  /* Portrait/mobile captures letterbox instead of cropping to an unreadable zoom. */
-  .shot.contain{
+    position:relative;aspect-ratio:16/9;
+    border-bottom:1px solid var(--hairline);overflow:hidden;
     background:
-      radial-gradient(120% 120% at 20% 0%, color-mix(in srgb, var(--dot) 16%, transparent) 0%, transparent 64%),
-      linear-gradient(160deg, #FAFAF8, #F0F0EE);
+      radial-gradient(120% 130% at 18% 0%, color-mix(in srgb, var(--dot) 15%, transparent) 0%, transparent 66%),
+      linear-gradient(160deg,#FAFAF8,#F0F0EE);
   }
-  .shot.contain img{object-fit:contain;object-position:center top;padding:12px 0 0}
-  .shot .fallback{
-    position:absolute;inset:0;
-    display:flex;align-items:center;justify-content:center;
-    font-size:52px;
-    background:
-      radial-gradient(120% 120% at 20% 0%, color-mix(in srgb, var(--dot) 22%, transparent) 0%, transparent 62%),
-      linear-gradient(160deg, #FAFAF8, #F0F0EE);
+  .shot img{width:100%;height:100%;object-fit:cover;object-position:top center;position:relative}
+  /* Portrait/mobile captures letterbox rather than crop to an unreadable zoom. */
+  .shot.contain img{object-fit:contain;object-position:center top;padding:8px 0 0}
+  .plate{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:var(--dot);opacity:.45;
   }
-  .card-body{padding:20px 20px 8px;flex:1;display:flex;flex-direction:column}
+  .plate svg{width:42px;height:42px}
 
-  .title-row{display:flex;align-items:center;gap:9px;margin-bottom:9px}
-  .swatch{width:7px;height:7px;border-radius:2px;background:var(--dot);flex:none}
-  h2{
-    margin:0;font-size:16.5px;font-weight:650;letter-spacing:-.015em;line-height:1.25;
+  .body{padding:13px 15px 0;flex:1;display:flex;flex-direction:column}
+  .titlerow{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .mark{
+    width:26px;height:26px;flex:none;border-radius:7px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--dot);
+    background:color-mix(in srgb, var(--dot) 11%, #fff);
+    border:1px solid color-mix(in srgb, var(--dot) 22%, transparent);
   }
-  .repo{
-    margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--faint);
+  .mark svg{width:15px;height:15px}
+  h2{margin:0;font-size:14.5px;font-weight:650;letter-spacing:-.015em;line-height:1.2}
+  .badge{
+    margin-left:auto;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--faint);
+    border:1px solid var(--hairline-strong);border-radius:5px;padding:1.5px 5px;
   }
   .blurb{
-    margin:0 0 16px;font-size:14px;line-height:1.62;color:var(--muted);flex:1;
+    margin:0 0 10px;font-size:12.8px;line-height:1.5;color:var(--muted);flex:1;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
   }
-  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+  .tags{display:flex;flex-wrap:wrap;gap:4px}
   .tag{
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.01em;
-    padding:3px 8px;border-radius:6px;
+    font-family:var(--mono);font-size:9.5px;padding:2px 6px;border-radius:5px;
     color:var(--muted);background:#F5F5F3;border:1px solid var(--hairline);
   }
 
   .links{
-    display:flex;flex-wrap:wrap;gap:7px;
-    padding:14px 20px 18px;
-    margin-top:14px;
-    border-top:1px solid var(--hairline);
+    display:flex;flex-wrap:wrap;gap:5px;
+    padding:11px 15px 13px;margin-top:11px;border-top:1px solid var(--hairline);
   }
   .lnk{
-    display:inline-flex;align-items:center;gap:6px;
-    font-size:12.5px;font-weight:550;text-decoration:none;
-    padding:6px 12px;border-radius:8px;
-    border:1px solid var(--hairline-strong);
-    color:var(--muted);
-    transition:all .15s ease;
-    white-space:nowrap;
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:11.5px;font-weight:550;text-decoration:none;
+    padding:5px 9px;border-radius:7px;
+    border:1px solid var(--hairline-strong);color:var(--muted);
+    transition:all .15s;white-space:nowrap;
   }
   .lnk:hover{color:var(--ink);border-color:var(--ink);background:#FAFAF8}
   .lnk svg{flex:none}
-  .lnk.primary{
-    background:var(--dot);border-color:var(--dot);color:#fff;
-  }
+  .lnk.primary{background:var(--dot);border-color:var(--dot);color:#fff}
   .lnk.primary:hover{filter:brightness(.92);background:var(--dot);border-color:var(--dot);color:#fff}
 
-  /* ── footer ───────────────────────────────────────────────── */
-  footer{
-    border-top:1px solid var(--hairline);
-    padding:38px 0 60px;
-  }
-  .foot{
-    display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;
-    font-size:13.5px;color:var(--faint);
-  }
+  footer{border-top:1px solid var(--hairline);padding:30px 0 50px}
+  .foot{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;
+    font-size:13px;color:var(--faint)}
   .foot a{color:var(--muted);text-decoration:none;font-weight:500}
   .foot a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
-  .foot-links{display:flex;flex-wrap:wrap;gap:20px}
-
-  .empty{
-    padding:60px 0 90px;color:var(--faint);font-size:15px;
-  }
+  .foot-links{display:flex;flex-wrap:wrap;gap:18px}
+  .empty{padding:50px 0 80px;color:var(--faint);font-size:15px}
 
   @media (max-width:640px){
-    .hero{padding:52px 0 32px}
-    .grid{grid-template-columns:1fr;gap:18px}
-    .navlinks{gap:16px}
-    .meta{gap:8px 18px}
+    .hero{padding:26px 0 0}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+    .tally{margin-left:0;width:100%}
   }
-
   @media (prefers-reduced-motion:reduce){
     *{animation:none !important;transition:none !important}
     .card:hover{transform:none}
@@ -274,27 +204,17 @@
 
 <main>
   <section class="wrap hero">
-    <p class="eyebrow">kbrovibes · side projects</p>
     <h1>Things I built on weekends.</h1>
-    <p class="lede">
-      I run storage infrastructure teams at Meta for a living. On weekends I build small,
-      complete products with Claude Code — real data, real users, shipped to production.
-      Every project below has a <strong>live app</strong>, a <strong>write-up</strong>, and its <strong>source</strong>.
-    </p>
-    <div class="meta">
-      <span><b id="count-projects">8</b> projects</span>
-      <span><b id="count-apps">7</b> live apps</span>
-      <span><b>100%</b> open source</span>
-      <span>by <a href="https://karthikrajan.info" style="color:inherit">Karthik Rajan</a></span>
-    </div>
+    <p class="lede">Real data, real users, shipped to production. Each one has a live app, a write-up, and its source.</p>
 
-    <div class="filters" role="group" aria-label="Filter projects">
+    <div class="toolbar" role="group" aria-label="Filter projects">
       <button class="chip" data-filter="all" aria-pressed="true">All</button>
       <button class="chip" data-filter="ai" aria-pressed="false">AI</button>
       <button class="chip" data-filter="finance" aria-pressed="false">Finance</button>
       <button class="chip" data-filter="sports" aria-pressed="false">Sports</button>
       <button class="chip" data-filter="tools" aria-pressed="false">Tools</button>
       <button class="chip" data-filter="fun" aria-pressed="false">Fun</button>
+      <span class="tally" id="tally"></span>
     </div>
   </section>
 
@@ -316,85 +236,123 @@
 </footer>
 
 <script>
+/* ── Custom glyphs: one purpose-drawn monoline mark per project. ─────────── */
+const S = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+
+const GLYPH = {
+  hanger: S('<path d="M12 3.2a2.1 2.1 0 0 0-1.1 3.9V9"/><path d="m12 9-8.4 6.1a1.6 1.6 0 0 0 .9 2.9h15a1.6 1.6 0 0 0 .9-2.9L12 9Z"/>'),
+  candles: S('<path d="M4 21v-6"/><path d="M9 21v-9"/><path d="M14 21v-5"/><path d="M19 21V8"/><path d="m3 9 5-4 4 3.2L21 3"/><path d="M21 3v4"/><path d="M21 3h-4"/>'),
+  ledger: S('<rect x="3" y="3.2" width="18" height="17.6" rx="3"/><path d="M7.5 16.5V12"/><path d="M12 16.5V7.8"/><path d="M16.5 16.5v-3"/>'),
+  trophy: S('<path d="M8 3.4h8v5.2a4 4 0 0 1-8 0V3.4Z"/><path d="M8 5.6H5.4A2.6 2.6 0 0 0 8 10"/><path d="M16 5.6h2.6A2.6 2.6 0 0 1 16 10"/><path d="M12 12.6v4.2"/><path d="M8.8 20.6h6.4"/>'),
+  shuttle: S('<path d="M9.4 12.6 6.2 5.4 12 2.8l5.8 2.6-3.2 7.2"/><path d="M12 2.8v9.8"/><path d="m9 6.6 1.4 6"/><path d="m15 6.6-1.4 6"/><path d="M9.4 12.6h5.2a3.3 3.3 0 1 1-5.2 0Z"/>'),
+  receipts: S('<path d="M10.7 3.2H6a1.2 1.2 0 0 0-1.2 1.2v16.4l2.3-1.6 2.3 1.6V3.2Z"/><path d="M13.3 3.2H18a1.2 1.2 0 0 1 1.2 1.2v16.4l-2.3-1.6-2.3 1.6V3.2Z"/>'),
+  mask: S('<path d="M2.8 7.6c3.4-2.1 15-2.1 18.4 0 0 5.3-2.7 8.5-4.8 8.5-1.8 0-2.6-1.8-4.4-1.8s-2.6 1.8-4.4 1.8c-2.1 0-4.8-3.2-4.8-8.5Z"/><path d="M6.8 10.2h2.6"/><path d="M14.6 10.2h2.6"/>'),
+  toolbox: S('<rect x="2.8" y="7.6" width="18.4" height="12.8" rx="2.4"/><path d="M8.8 7.6V5.8a2 2 0 0 1 2-2h2.4a2 2 0 0 1 2 2v1.8"/><path d="M2.8 13h18.4"/><path d="M9.6 13v2.2h4.8V13"/>'),
+  doodle: S('<path d="m16.8 3.4 3.8 3.8-9.6 9.6-4.7 1 1-4.7 9.5-9.7Z"/><path d="M3 20.4c1.7-2.6 3.4 2.1 5.1-.4s3.4 2.1 5.1-.4"/>'),
+  taxdoc: S('<path d="M6.4 3.2h7.2l4 4v13.6a1.2 1.2 0 0 1-1.2 1.2H6.4a1.2 1.2 0 0 1-1.2-1.2V4.4a1.2 1.2 0 0 1 1.2-1.2Z"/><path d="M13.6 3.2v4h4"/><path d="m15 12-6 7"/><circle cx="9.8" cy="12.6" r="1.1"/><circle cx="14.2" cy="18.4" r="1.1"/>'),
+  themes: S('<circle cx="12" cy="12" r="8.8"/><path d="M12 3.2a8.8 8.8 0 0 0 0 17.6Z" fill="currentColor" stroke="none"/>'),
+  wallet: S('<path d="M20.8 8.4V6.6a1.6 1.6 0 0 0-1.6-1.6H5.4a2.2 2.2 0 1 0 0 4.4h13.8a1.6 1.6 0 0 1 1.6 1.6v7.4a2 2 0 0 1-2 2H5.2a2 2 0 0 1-2-2V7.2"/><circle cx="16.8" cy="14.2" r="1.2"/>'),
+  braces: S('<path d="M8.6 3.6a3 3 0 0 0-3 3v3a2.4 2.4 0 0 1-2.4 2.4 2.4 2.4 0 0 1 2.4 2.4v3a3 3 0 0 0 3 3"/><path d="M15.4 3.6a3 3 0 0 1 3 3v3a2.4 2.4 0 0 0 2.4 2.4 2.4 2.4 0 0 0-2.4 2.4v3a3 3 0 0 1-3 3"/><path d="m14.2 9-4.4 6"/>'),
+  timer: S('<circle cx="10.6" cy="13.4" r="7.8"/><path d="M10.6 8.8v4.6l3 1.9"/><path d="m19.4 2.4.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9.9-2.3Z"/>'),
+  parcel: S('<path d="M3.2 7.4 12 3l8.8 4.4v9.2L12 21l-8.8-4.4V7.4Z"/><path d="m3.2 7.4 8.8 4.4 8.8-4.4"/><path d="M12 11.8V21"/>')
+};
+
 const ICON = {
-  app:  '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>',
-  page: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H19v18H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M8 7h7M8 11h7"/></svg>',
-  repo: '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.627-5.373-12-12-12z"/></svg>'
+  app:  '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>',
+  page: '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H19v18H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M8 7h7M8 11h7"/></svg>',
+  repo: '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.627-5.373-12-12-12z"/></svg>'
 };
 
 const PROJECTS = [
-  {
-    id:"stylecheck", title:"Hanger Management", repo_name:"stylecheck",
-    blurb:"An AI personal stylist. It catalogues every piece of clothing you own, builds a photoreal render of you, and shows you wearing the outfit before you get dressed.",
-    app:"https://hangermanagement.vercel.app",
-    page:"https://kbrovibes.github.io/stylecheck/",
+  { id:"stylecheck", title:"Hanger Management", repo_name:"stylecheck", glyph:"hanger",
+    blurb:"An AI personal stylist. Catalogues every piece of clothing you own, builds a photoreal render of you, and shows you wearing the outfit before you get dressed.",
+    app:"https://hangermanagement.vercel.app", page:"https://kbrovibes.github.io/stylecheck/",
     repo:"https://github.com/kbrovibes/stylecheck",
-    tags:["Next.js 16","Supabase","Gemini","Vercel"],
-    cats:["ai"], accent:"#9A7B4F", emoji:"👔", thumb:"media/stylecheck.jpg"
-  },
-  {
-    id:"stonkbro", title:"stonkbro", repo_name:"stonkbro",
-    blurb:"An options-trading copilot for premium sellers. Live option chains, a PMCC scanner, AI-written research, position tracking, and roll/close signals. Definitely not financial advice.",
-    app:"https://stonkbro.vercel.app",
-    page:"https://kbrovibes.github.io/stonkbro/",
+    tags:["Next.js 16","Supabase","Gemini"], cats:["ai"], accent:"#9A7B4F", thumb:"media/stylecheck.jpg" },
+
+  { id:"stonkbro", title:"Stonk Bro", repo_name:"stonkbro", glyph:"candles",
+    blurb:"An options-trading copilot for premium sellers. Live option chains, a PMCC scanner, AI-written research, position tracking, and roll/close signals. Not financial advice.",
+    app:"https://stonkbro.vercel.app", page:"https://kbrovibes.github.io/stonkbro/",
     repo:"https://github.com/kbrovibes/stonkbro",
-    tags:["Next.js","Claude AI","Supabase","Yahoo Finance"],
-    cats:["ai","finance"], accent:"#16A34A", emoji:"📈", thumb:"media/stonkbro.jpg"
-  },
-  {
-    id:"marketmath", title:"MarketMath", repo_name:"marketmath",
-    blurb:"A fundamentals dashboard for the S&P 500. Twenty years of as-filed 10-K data per company, reverse DCF, and quality scores that print their own rules. Every number traces back to an SEC filing.",
-    app:"https://marketmath-theta.vercel.app",
-    page:"https://kbrovibes.github.io/marketmath/",
+    tags:["Next.js","Claude AI","Supabase"], cats:["ai","finance"], accent:"#16A34A", thumb:"media/stonkbro.jpg" },
+
+  { id:"marketmath", title:"Market Math", repo_name:"marketmath", glyph:"ledger",
+    blurb:"A fundamentals dashboard for the S&P 500. Twenty years of as-filed 10-K data per company, reverse DCF, and quality scores that print their own rules. Every number traces to a filing.",
+    app:"https://marketmath-theta.vercel.app", page:"https://kbrovibes.github.io/marketmath/",
     repo:"https://github.com/kbrovibes/marketmath",
-    tags:["Next.js","Supabase","SEC EDGAR","Crons"],
-    cats:["finance"], accent:"#2563EB", emoji:"📊", thumb:"media/marketmath.jpg"
-  },
-  {
-    id:"opencourt", title:"OpenCourt", repo_name:"opencourt",
+    tags:["Next.js","SEC EDGAR","Supabase"], cats:["finance"], accent:"#2563EB", thumb:"media/marketmath.jpg" },
+
+  { id:"opencourt", title:"Open Court", repo_name:"opencourt", glyph:"trophy",
     blurb:"Club badminton tournaments that don't feel like spreadsheets. Drop a link in the group chat, tap players into teams, and run the whole bracket from a phone at courtside.",
-    app:"https://opencourt-badminton.vercel.app",
-    page:"https://kbrovibes.github.io/opencourt/",
+    app:"https://opencourt-badminton.vercel.app", page:"https://kbrovibes.github.io/opencourt/",
     repo:"https://github.com/kbrovibes/opencourt",
-    tags:["Next.js","Supabase","Realtime","PWA"],
-    cats:["sports"], accent:"#0284C7", emoji:"🏆", thumb:"media/opencourt.jpg", fit:"contain"
-  },
-  {
-    id:"snobaddy", title:"snobaddy", repo_name:"snobaddy",
+    tags:["Next.js","Supabase","PWA"], cats:["sports"], accent:"#0284C7", thumb:"media/opencourt.jpg", fit:"contain" },
+
+  { id:"snobaddy", title:"Sno Baddy", repo_name:"snobaddy", glyph:"shuttle",
     blurb:"A digital whiteboard for a Monday/Thursday badminton club in Snoqualmie. Sessions, check-ins, match generation, season leaderboards. Wildly over-engineered, entirely on purpose.",
-    app:"https://snobaddy.vercel.app",
-    page:"https://kbrovibes.github.io/snobaddy/",
+    app:"https://snobaddy.vercel.app", page:"https://kbrovibes.github.io/snobaddy/",
     repo:"https://github.com/kbrovibes/snobaddy",
-    tags:["Next.js","Supabase","Tailwind","Realtime"],
-    cats:["sports"], accent:"#DB2777", emoji:"🏸", thumb:"media/snobaddy.jpg", fit:"contain"
-  },
-  {
-    id:"wisesplit", title:"wisesplit", repo_name:"wisesplit",
+    tags:["Next.js","Supabase","Realtime"], cats:["sports"], accent:"#DB2777", thumb:"media/snobaddy.jpg", fit:"contain" },
+
+  { id:"doodle-disaster", title:"Doodle Disaster", repo_name:"doodle-disaster", glyph:"doodle",
+    blurb:"A multiplayer draw-and-guess party game. Short room codes, a live shared canvas, chat guessing, and bots to fill the room when your friends flake.",
+    app:"https://doodle-disaster.vercel.app", page:"https://kbrovibes.github.io/doodle-disaster/",
+    repo:"https://github.com/kbrovibes/doodle-disaster",
+    tags:["Next.js","Canvas","PWA"], cats:["fun"], accent:"#F59E0B", thumb:"media/doodle-disaster.jpg" },
+
+  { id:"wisesplit", title:"Wise Split", repo_name:"wisesplit", glyph:"receipts",
     blurb:"Splitwise without the paywall. Debt-graph settle-up that beats pairwise, natural-language quick add, multi-currency, offline PWA. Pure SVG, zero tracking, free forever.",
-    app:"https://kbrovibes.github.io/wisesplit/",
-    page:"https://kbrovibes.github.io/wisesplit/landing/",
+    app:"https://kbrovibes.github.io/wisesplit/", page:"https://kbrovibes.github.io/wisesplit/landing/",
     repo:"https://github.com/kbrovibes/wisesplit",
-    tags:["Next.js","Supabase","PWA","GitHub Pages"],
-    cats:["tools"], accent:"#0D9488", emoji:"🧾", thumb:"media/wisesplit.jpg"
-  },
-  {
-    id:"superhero-stories", title:"superhero-stories", repo_name:"superhero-stories",
-    blurb:"482 original superhero stories across Marvel, DC and the Avengers, served as a fully static web app. Written for a seven-year-old audience — no death, no tragedy, villains are merely mischievous.",
-    app:"https://superhero-stories.vercel.app",
-    page:"https://kbrovibes.github.io/superhero-stories/",
+    tags:["Next.js","Supabase","PWA"], cats:["tools"], accent:"#0D9488", thumb:"media/wisesplit.jpg" },
+
+  { id:"superhero-stories", title:"Superhero Stories", repo_name:"superhero-stories", glyph:"mask",
+    blurb:"482 original superhero stories across Marvel, DC and the Avengers, as a fully static web app. Written for a seven-year-old audience — no death, no tragedy, villains merely mischievous.",
+    app:"https://superhero-stories.vercel.app", page:"https://kbrovibes.github.io/superhero-stories/",
     repo:"https://github.com/kbrovibes/superhero-stories",
-    tags:["Next.js","Static Export","Claude AI"],
-    cats:["fun","ai"], accent:"#6366F1", emoji:"🦸", thumb:"media/superhero-stories.jpg"
-  },
-  {
-    id:"bro-toolkit", title:"bro-toolkit", repo_name:"bro-toolkit",
+    tags:["Next.js","Static Export","Claude AI"], cats:["fun","ai"], accent:"#6366F1", thumb:"media/superhero-stories.jpg" },
+
+  { id:"bro-toolkit", title:"Bro Toolkit", repo_name:"bro-toolkit", glyph:"toolbox",
     blurb:"A portable Mac toolkit — Claude skills, zsh and tmux configs, and a kbro CLI. One command to make a fresh machine feel like home, and one command to remove every trace of it.",
-    app:null,
-    page:"https://kbrovibes.github.io/bro-toolkit/",
+    app:null, page:"https://kbrovibes.github.io/bro-toolkit/",
     repo:"https://github.com/kbrovibes/bro-toolkit",
-    tags:["Shell","Zsh","Tmux","Claude Skills"],
-    cats:["tools"], accent:"#7C3AED", emoji:"🧰", thumb:"media/bro-toolkit.jpg"
-  }
+    tags:["Shell","Zsh","Tmux"], cats:["tools"], accent:"#7C3AED", thumb:"media/bro-toolkit.jpg" },
+
+  { id:"taxbro", title:"Tax Bro", repo_name:"taxbro", glyph:"taxdoc",
+    blurb:"A Claude Code assistant for US federal returns. Point it at a folder of W-2s, 1099s and receipts; it reads everything in one pass and builds a structured dashboard. Not tax advice.",
+    app:null, page:"https://kbrovibes.github.io/taxbro/",
+    repo:"https://github.com/kbrovibes/taxbro",
+    tags:["Claude Code","TypeScript"], cats:["ai","finance"], accent:"#D97706", thumb:"media/taxbro.jpg" },
+
+  { id:"portfolio", title:"Portfolio", repo_name:"portfolio", glyph:"themes",
+    blurb:"The personal site itself. One résumé dataset rendered through completely different visual themes — a polished dark portfolio, a monospace CLI, and a deliberately goofy sticker mode.",
+    app:"https://karthikrajan.info", page:"https://kbrovibes.github.io/portfolio/",
+    repo:"https://github.com/kbrovibes/portfolio",
+    tags:["Next.js","Framer Motion","Tailwind"], cats:["tools"], accent:"#8B5CF6", thumb:"media/portfolio.jpg" },
+
+  { id:"brokebro", title:"Broke Bro", repo_name:"brokebro", glyph:"wallet",
+    blurb:"Personal expense tracking with an Amazon order importer — JSON orders and returns, tolerance matching, and refund credits reconciled automatically.",
+    app:"https://brokebro.vercel.app", page:null,
+    repo:"https://github.com/kbrovibes/brokebro",
+    tags:["Next.js","TypeScript"], cats:["finance","tools"], accent:"#E11D48", thumb:"media/brokebro.jpg", private:true },
+
+  { id:"deadcode", title:"Dead Code", repo_name:"deadcode", glyph:"braces",
+    blurb:"A personal interview-prep Q&A bank. Drop in raw PDFs, notes or screenshots and the ingestion pipeline produces a structured answer with a TLDR to skim and a full mode to study.",
+    app:"https://deadcode2.vercel.app", page:null,
+    repo:"https://github.com/kbrovibes/deadcode",
+    tags:["Next.js","Static Export","Supabase"], cats:["tools"], accent:"#475569", thumb:"media/deadcode.jpg", private:true },
+
+  { id:"claude-token-bot", title:"Claude Token Bot", repo_name:"claude-token-bot", glyph:"timer",
+    blurb:"Keeps Claude Code's five-hour rolling token window perpetually warm by firing scheduled pings on a configurable cadence, so a window is always active.",
+    app:"https://claude-token-bot.vercel.app", page:null,
+    repo:"https://github.com/kbrovibes/claude-token-bot",
+    tags:["Python","Cron","macOS"], cats:["tools"], accent:"#C2410C", thumb:"media/claude-token-bot.jpg", private:true },
+
+  { id:"daymn-amazon", title:"Daymn Amazon", repo_name:"daymn-amazon", glyph:"parcel",
+    blurb:"An honest look at where the money actually went. Turns your Amazon order history into a self-contained local dashboard — spend by month, by category, and by a five-tier impulse scale.",
+    app:null, page:null,
+    repo:"https://github.com/kbrovibes/daymn-amazon",
+    tags:["Node","Local-only","HTML"], cats:["finance","tools"], accent:"#0F766E", thumb:"media/daymn-amazon.jpg", private:true }
 ];
 
 const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -405,21 +363,23 @@ function card(p){
   el.style.setProperty('--dot', p.accent);
   el.dataset.cats = p.cats.join(' ');
 
+  const g = GLYPH[p.glyph] || GLYPH.braces;
+
   const links = [];
-  if (p.app) links.push(`<a class="lnk primary" href="${esc(p.app)}" target="_blank" rel="noopener noreferrer">${ICON.app}<span>Open app</span></a>`);
-  links.push(`<a class="lnk" href="${esc(p.page)}" target="_blank" rel="noopener noreferrer">${ICON.page}<span>Project page</span></a>`);
+  if (p.app)  links.push(`<a class="lnk primary" href="${esc(p.app)}" target="_blank" rel="noopener noreferrer">${ICON.app}<span>Open app</span></a>`);
+  if (p.page) links.push(`<a class="lnk" href="${esc(p.page)}" target="_blank" rel="noopener noreferrer">${ICON.page}<span>Project page</span></a>`);
   links.push(`<a class="lnk" href="${esc(p.repo)}" target="_blank" rel="noopener noreferrer">${ICON.repo}<span>Source</span></a>`);
 
   el.innerHTML = `
-    <div class="shot${p.fit === "contain" ? " contain" : ""}">
-      <div class="fallback" aria-hidden="true">${p.emoji}</div>
+    <div class="shot${p.fit === 'contain' ? ' contain' : ''}">
+      <div class="plate" aria-hidden="true">${g}</div>
       <img src="${esc(p.thumb)}" alt="Screenshot of ${esc(p.title)}" loading="lazy" decoding="async" />
     </div>
-    <div class="card-body">
-      <div class="title-row">
-        <span class="swatch" aria-hidden="true"></span>
+    <div class="body">
+      <div class="titlerow">
+        <span class="mark" aria-hidden="true">${g}</span>
         <h2>${esc(p.title)}</h2>
-        <span class="repo">${esc(p.repo_name)}</span>
+        ${p.private ? '<span class="badge" title="Source repository is private">Private</span>' : ''}
       </div>
       <p class="blurb">${esc(p.blurb)}</p>
       <div class="tags">${p.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
@@ -427,7 +387,7 @@ function card(p){
     <div class="links">${links.join('')}</div>
   `;
 
-  // Screenshots are optional — fall back to the accent/emoji plate if one is missing.
+  // Screenshots are optional — a missing one leaves the glyph plate showing.
   const img = el.querySelector('.shot img');
   img.addEventListener('error', () => img.remove(), { once:true });
 
@@ -437,8 +397,10 @@ function card(p){
 const grid = document.getElementById('grid');
 PROJECTS.forEach(p => grid.appendChild(card(p)));
 
-document.getElementById('count-projects').textContent = PROJECTS.length;
-document.getElementById('count-apps').textContent = PROJECTS.filter(p => p.app).length;
+const liveApps = PROJECTS.filter(p => p.app).length;
+const tally = document.getElementById('tally');
+const summary = `${PROJECTS.length} projects · ${liveApps} live apps`;
+tally.textContent = summary;
 
 const chips = [...document.querySelectorAll('.chip')];
 const empty = document.getElementById('empty');
@@ -454,6 +416,7 @@ chips.forEach(chip => chip.addEventListener('click', () => {
     if (match) shown++;
   });
   empty.hidden = shown > 0;
+  tally.textContent = f === 'all' ? summary : `${shown} shown`;
 }));
 </script>
 </body>
