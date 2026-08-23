@@ -170,7 +170,15 @@
   }
   .shot img{
     width:100%;height:100%;object-fit:cover;object-position:top center;
+    position:relative;
   }
+  /* Portrait/mobile captures letterbox instead of cropping to an unreadable zoom. */
+  .shot.contain{
+    background:
+      radial-gradient(120% 120% at 20% 0%, color-mix(in srgb, var(--dot) 16%, transparent) 0%, transparent 64%),
+      linear-gradient(160deg, #FAFAF8, #F0F0EE);
+  }
+  .shot.contain img{object-fit:contain;object-position:center top;padding:12px 0 0}
   .shot .fallback{
     position:absolute;inset:0;
     display:flex;align-items:center;justify-content:center;
@@ -349,7 +357,7 @@ const PROJECTS = [
     page:"https://kbrovibes.github.io/opencourt/",
     repo:"https://github.com/kbrovibes/opencourt",
     tags:["Next.js","Supabase","Realtime","PWA"],
-    cats:["sports"], accent:"#0284C7", emoji:"🏆", thumb:"media/opencourt.jpg"
+    cats:["sports"], accent:"#0284C7", emoji:"🏆", thumb:"media/opencourt.jpg", fit:"contain"
   },
   {
     id:"snobaddy", title:"snobaddy", repo_name:"snobaddy",
@@ -358,7 +366,7 @@ const PROJECTS = [
     page:"https://kbrovibes.github.io/snobaddy/",
     repo:"https://github.com/kbrovibes/snobaddy",
     tags:["Next.js","Supabase","Tailwind","Realtime"],
-    cats:["sports"], accent:"#DB2777", emoji:"🏸", thumb:"media/snobaddy.jpg"
+    cats:["sports"], accent:"#DB2777", emoji:"🏸", thumb:"media/snobaddy.jpg", fit:"contain"
   },
   {
     id:"wisesplit", title:"wisesplit", repo_name:"wisesplit",
@@ -371,7 +379,7 @@ const PROJECTS = [
   },
   {
     id:"superhero-stories", title:"superhero-stories", repo_name:"superhero-stories",
-    blurb:"Hundreds of original superhero stories across Marvel, DC and the Avengers, served as a fully static web app. Written for a seven-year-old audience — no death, no tragedy, villains are merely mischievous.",
+    blurb:"482 original superhero stories across Marvel, DC and the Avengers, served as a fully static web app. Written for a seven-year-old audience — no death, no tragedy, villains are merely mischievous.",
     app:"https://superhero-stories.vercel.app",
     page:"https://kbrovibes.github.io/superhero-stories/",
     repo:"https://github.com/kbrovibes/superhero-stories",
@@ -403,7 +411,7 @@ function card(p){
   links.push(`<a class="lnk" href="${esc(p.repo)}" target="_blank" rel="noopener noreferrer">${ICON.repo}<span>Source</span></a>`);
 
   el.innerHTML = `
-    <div class="shot">
+    <div class="shot${p.fit === "contain" ? " contain" : ""}">
       <div class="fallback" aria-hidden="true">${p.emoji}</div>
       <img src="${esc(p.thumb)}" alt="Screenshot of ${esc(p.title)}" loading="lazy" decoding="async" />
     </div>
