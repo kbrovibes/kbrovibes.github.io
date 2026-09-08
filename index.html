@@ -396,6 +396,7 @@ const GLYPH = {
   mask:     S('<path d="M2.8 7.6c3.4-2.1 15-2.1 18.4 0 0 5.3-2.7 8.5-4.8 8.5-1.8 0-2.6-1.8-4.4-1.8s-2.6 1.8-4.4 1.8c-2.1 0-4.8-3.2-4.8-8.5Z"/><path d="M6.8 10.2h2.6"/><path d="M14.6 10.2h2.6"/>'),
   toolbox:  S('<rect x="2.8" y="7.6" width="18.4" height="12.8" rx="2.4"/><path d="M8.8 7.6V5.8a2 2 0 0 1 2-2h2.4a2 2 0 0 1 2 2v1.8"/><path d="M2.8 13h18.4"/><path d="M9.6 13v2.2h4.8V13"/>'),
   doodle:   S('<path d="m16.8 3.4 3.8 3.8-9.6 9.6-4.7 1 1-4.7 9.5-9.7Z"/><path d="M3 20.4c1.7-2.6 3.4 2.1 5.1-.4s3.4 2.1 5.1-.4"/>'),
+  taboo:    S('<path d="M4.2 6.2a2.4 2.4 0 0 1 2.4-2.4h10.8a2.4 2.4 0 0 1 2.4 2.4v7a2.4 2.4 0 0 1-2.4 2.4H10l-3.6 3.2v-3.2H6.6a2.4 2.4 0 0 1-2.4-2.4v-7Z"/><circle cx="8.6" cy="9.7" r=".9" fill="currentColor" stroke="none"/><circle cx="12" cy="9.7" r=".9" fill="currentColor" stroke="none"/><circle cx="15.4" cy="9.7" r=".9" fill="currentColor" stroke="none"/><circle cx="17.6" cy="17.4" r="3.4"/><path d="m15.2 15 4.8 4.8"/>'),
   taxdoc:   S('<path d="M6.4 3.2h7.2l4 4v13.6a1.2 1.2 0 0 1-1.2 1.2H6.4a1.2 1.2 0 0 1-1.2-1.2V4.4a1.2 1.2 0 0 1 1.2-1.2Z"/><path d="M13.6 3.2v4h4"/><path d="m15 12-6 7"/><circle cx="9.8" cy="12.6" r="1.1"/><circle cx="14.2" cy="18.4" r="1.1"/>'),
   themes:   S('<circle cx="12" cy="12" r="8.8"/><path d="M12 3.2a8.8 8.8 0 0 0 0 17.6Z" fill="currentColor" stroke="none"/>'),
   wallet:   S('<path d="M20.8 8.4V6.6a1.6 1.6 0 0 0-1.6-1.6H5.4a2.2 2.2 0 1 0 0 4.4h13.8a1.6 1.6 0 0 1 1.6 1.6v7.4a2 2 0 0 1-2 2H5.2a2 2 0 0 1-2-2V7.2"/><circle cx="16.8" cy="14.2" r="1.2"/>'),
@@ -467,6 +468,12 @@ const PROJECTS = [
     app:"https://snobaddy.vercel.app", page:"https://kbrovibes.github.io/snobaddy/",
     repo:"https://github.com/kbrovibes/snobaddy",
     tags:["Next.js","Supabase","Realtime"], accent:"#BE185D", frames:6, fit:"contain" },
+
+  { group:"play", id:"tipsy-taboo", title:"Tipsy Taboo", glyph:"taboo",
+    blurb:"A one-phone Taboo night. Pass the phone, swipe right for a point, left to skip, tap the hand when a banned word slips out — 5,000+ cards across four difficulties and eight desi themes, plus a referee link for the other team's phone.",
+    app:"https://tipsy-taboo.vercel.app", page:"https://kbrovibes.github.io/tipsy-taboo/",
+    repo:"https://github.com/kbrovibes/tipsy-taboo",
+    tags:["Next.js","PWA","Realtime"], accent:"#B8235A", frames:5, fit:"contain" },
 
   { group:"play", id:"doodle-disaster", title:"Doodle Disaster", glyph:"doodle",
     blurb:"A multiplayer draw-and-guess party game. A live shared canvas, word masks and hints, and AI bots that actually draw so the room is never empty.",
